@@ -1,21 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Home from '../Home/Home';
 import './CardMain.css'
 
-const CardMain = () => {
+const CardMain = ({handleAddToCart}) => {
+    const [movies, setMovies] = useState([]);
+    useEffect(()=>{
+        fetch('data.json')
+        .then(res => res.json())
+        .then(data => setMovies(data))
+    },[])
+
+    
+
+
     return (
         <div>
-            <div className="movie-container">
-                <div className="movie-card card">
-                    <div className="movie-poster">
-                        <img src="" alt="" />
-                    </div>
-                    <h2>Abdullah</h2>
-                    <p>Lorem ipsum dolor sit amet.</p>
-                    <div className="watchTime">
-                        <p>Watch</p>
-                        <p>Rating</p>
-                    </div>
-                </div>
+            <div className="row row-cols-1 row-cols-md-2 g-4 ">
+               {
+                movies.map(movie => <Home
+                key={movie.category}
+                movie={movie}
+                handleAddToCart={handleAddToCart}
+                
+                ></Home>)
+
+               }
             </div>
         </div>
     );
